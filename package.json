@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/chfleury/nodeJS-clean-architecture/issues"
   },
-  "homepage": "https://github.com/chfleury/nodeJS-clean-architecture#readme"
+  "homepage": "https://github.com/chfleury/nodeJS-clean-architecture#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^3.2.8"
+  }
 }

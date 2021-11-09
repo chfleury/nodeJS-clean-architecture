@@ -4,7 +4,12 @@ import { badRequest } from '../helpers/http-helper'
 
 export class SingUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
-    const requiredFields = ['name', 'email', 'password']
+    const requiredFields = [
+      'name',
+      'email',
+      'password',
+      'passwordConfirmation'
+    ]
 
     for (let i = 0; i < requiredFields.length; i++) {
       const field = requiredFields[i]

@@ -13,6 +13,6 @@ module.exports = {
   coverageProvider: 'v8',
 
   transform: {
-    '.*\\.tss': 'ts-jest',
+    '.*\\.ts': 'ts-jest',
   },
 };

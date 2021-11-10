@@ -12,7 +12,7 @@ export class SingUpController implements Controller {
     this.addAcount = addAcount
   }
 
-  handle (httpRequest: HttpRequest): HttpResponse {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const requiredFields = [
         'name',
@@ -38,7 +38,7 @@ export class SingUpController implements Controller {
         return badRequest(new InvalidParamError('email'))
       }
 
-      const acc = this.addAcount.add({
+      const acc = await this.addAcount.add({
         name: body.name,
         email: body.email,
         password: body.password

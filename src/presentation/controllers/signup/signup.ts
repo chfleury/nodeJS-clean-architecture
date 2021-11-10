@@ -44,7 +44,15 @@ export class SingUpController implements Controller {
         password: body.password
       })
 
-      return { body: {}, statusCode: 200 }
+      return {
+        body: {
+          id: 'valid_id',
+          name: body.name,
+          email: body.email,
+          password: body.password
+        },
+        statusCode: 200
+      }
     } catch (e) {
       return serverError()
     }

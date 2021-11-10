@@ -5,10 +5,6 @@ import { EmailValidator, AddAccountModel, AddAccount, AccountModel } from './sig
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
     isValid (email: string): boolean {
-      if (email === 'invalid_email@mail.com') {
-        return false
-      }
-
       return true
     }
   }
@@ -206,5 +202,24 @@ describe('SignUp Controller', () => {
       email: 'email@mail.com',
       password: '123'
     })
+  })
+
+  test('Should return 500 if EmailValidator throws', () => {
+    const { sut, addAccountStub } = makeSut()
+
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => { throw new Error() })
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'email@mail.com',
+        password: '123',
+        passwordConfirmation: '123'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })

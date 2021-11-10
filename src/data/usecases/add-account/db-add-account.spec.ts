@@ -102,4 +102,23 @@ describe('DbAddAccount Usecase', () => {
     const promise = sut.add(accountData)
     await expect(promise).rejects.toThrow()
   })
+
+  test('Should return and account on sucess ', async () => {
+    const { sut } = makeSut()
+
+    const accountData = {
+      name: 'valid_n',
+      email: 'valid_e',
+      password: 'valid_password'
+    }
+
+    const account = await sut.add(accountData)
+
+    expect(account).toEqual({
+      id: 'valid_i',
+      name: 'valid_n',
+      email: 'valid_e',
+      password: 'hashed_password'
+    })
+  })
 })

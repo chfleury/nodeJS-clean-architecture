@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
     "mongodb": "^4.1.4",
     "validator": "^13.7.0"
   }

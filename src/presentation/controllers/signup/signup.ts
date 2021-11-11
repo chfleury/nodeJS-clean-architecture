@@ -46,7 +46,7 @@ export class SingUpController implements Controller {
 
       return ok(acc)
     } catch (e) {
-      console.error(e)
+      // console.error(e)
       return serverError()
     }
   }

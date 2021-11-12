@@ -1,4 +1,4 @@
-import { Collection, MongoClient } from 'mongodb'
+import { MongoClient } from 'mongodb'
 import { AccountModel } from '../../../../domain/models/account'
 import { AddAccountModel } from '../../../../domain/usecases/add-account'
 
@@ -13,7 +13,7 @@ export const MongoHelper = {
     await this.client.close()
   },
 
-  getCollection (name: string): Collection {
+  getCollection (name: string): any {
     return this.client.db().collection(name)
   },
 

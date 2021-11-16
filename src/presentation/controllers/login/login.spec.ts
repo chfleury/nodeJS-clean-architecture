@@ -26,6 +26,14 @@ const makeEmailValidator = (): EmailValidator => {
   }
   return new EmailValidatorStub()
 }
+
+const makeFakeRequest = (): HttpRequest => ({
+  body: {
+    email: 'any_email',
+    password: 'any_password'
+  }
+})
+
 describe('Login Controller', () => {
   test('Should return 400 if no email is provided', async () => {
     const { sut } = makeSut()
@@ -62,12 +70,7 @@ describe('Login Controller', () => {
 
   test('Should call EmailValidator with correct email', async () => {
     const { sut, emailValidatorStub } = makeSut()
-    const httpRequest: HttpRequest = {
-      body: {
-        email: 'any_email',
-        password: 'any_password'
-      }
-    }
+    const httpRequest: HttpRequest = makeFakeRequest()
 
     const isValidSpy = jest.spyOn(emailValidatorStub, 'isValid')
 
@@ -77,12 +80,7 @@ describe('Login Controller', () => {
 
   test('Should return 400 if invalid email is provided', async () => {
     const { sut, emailValidatorStub } = makeSut()
-    const httpRequest: HttpRequest = {
-      body: {
-        email: 'any_email',
-        password: 'any_password'
-      }
-    }
+    const httpRequest: HttpRequest = makeFakeRequest()
 
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
 

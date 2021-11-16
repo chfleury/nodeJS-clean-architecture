@@ -7,7 +7,7 @@ const makeControllerStub = (): Controller => {
       const HttpResponse: HttpResponse = {
         statusCode: 200,
         body: {
-
+          name: 'mock'
         }
       }
 
@@ -48,5 +48,24 @@ describe('LogControllerDecorator', () => {
 
     await sut.handle(httpRequest)
     expect(handleSpy).toBeCalledWith(httpRequest)
+  })
+
+  test('Should return the same result as the controller', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest = {
+      body: {
+        email: 'a@a.com',
+        name: 'a',
+        password: '1',
+        passwordConfirmation: '1'
+      }
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual({
+      body: { name: 'mock' },
+      statusCode: 200
+    })
   })
 })

@@ -46,11 +46,7 @@ export class SingUpController implements Controller {
 
       return ok(acc)
     } catch (err: any) {
-      const error = new Error()
-      error.stack = err.stack
-      error.name = err.name
-      error.message = err.message
-      return serverError(error)
+      return serverError(err)
     }
   }
 }

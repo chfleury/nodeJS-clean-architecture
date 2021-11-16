@@ -2,6 +2,7 @@ import { SingUpController } from './signup'
 import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 import { EmailValidator, AddAccountModel, AddAccount, AccountModel } from './signup-protocals'
 import { HttpRequest } from '../../protocols'
+import { ok } from '../../helpers/http-helper'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -224,12 +225,11 @@ describe('SignUp Controller', () => {
     const httpRequest = makeFakeRequest()
 
     const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.statusCode).toBe(200)
-    expect(httpResponse.body).toEqual({
+    expect(httpResponse).toEqual(ok({
       id: 'valid_id',
       name: 'any_name',
       email: 'valid@mail.com',
       password: '123'
-    })
+    }))
   })
 })

@@ -9,6 +9,10 @@ export class LoginController implements Controller {
       return await new Promise(resolve => resolve(badRequest(new MissingParamError('email'))))
     }
 
+    if (!requestBody.password) {
+      return await new Promise(resolve => resolve(badRequest(new MissingParamError('password'))))
+    }
+
     return await new Promise(resolve => resolve(ok({ ok: 'ok' })))
   }
 }

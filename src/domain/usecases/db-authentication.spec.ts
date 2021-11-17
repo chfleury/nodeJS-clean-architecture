@@ -32,8 +32,9 @@ describe('DbAuthentication UseCase', () => {
   test('Should call LoadAccountByEmailRepository with correct email', () => {
     const { sut, loadAccountByEmailRepositoryStub } = makeSut()
     const loadSpy = jest.spyOn(loadAccountByEmailRepositoryStub, 'load')
-    const token = sut.auth('any_email@mail.com', 'any_password')
-    console.log(token)
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    sut.auth('any_email@mail.com', 'any_password')
+
     expect(loadSpy).toHaveBeenCalledWith('any_email@mail.com')
   })
 

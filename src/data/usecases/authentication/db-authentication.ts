@@ -1,5 +1,5 @@
-import { LoadAccountByEmailRepository } from '../../data/protocols/db/load-account-by-email-repository'
-import { Authentication } from './authentication'
+import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository'
+import { Authentication } from '../../../domain/usecases/authentication'
 
 export class DbAuthentication implements Authentication {
   private readonly loadAccountByEmailRepository

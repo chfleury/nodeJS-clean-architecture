@@ -8,16 +8,16 @@ export class DbAuthentication implements Authentication {
   private readonly loadAccountByEmailRepository
   private readonly hashComparer
   private readonly tokenGenerator
-  private readonly updateAcessTokenRepositoryStub
+  private readonly updateAcessTokenRepository
   constructor (
     loadAccountByEmailRepository: LoadAccountByEmailRepository,
     hashComparer: HashComparer,
     tokenGenerator: TokenGenerator,
-    updateAcessTokenRepositoryStub: UpdateAcessTokenRepository) {
+    updateAcessTokenRepository: UpdateAcessTokenRepository) {
     this.loadAccountByEmailRepository = loadAccountByEmailRepository
     this.hashComparer = hashComparer
     this.tokenGenerator = tokenGenerator
-    this.updateAcessTokenRepositoryStub = updateAcessTokenRepositoryStub
+    this.updateAcessTokenRepository = updateAcessTokenRepository
   }
 
   async auth (email: string, password: string): Promise<string | null> {
@@ -31,7 +31,7 @@ export class DbAuthentication implements Authentication {
 
     const generatedToken = await this.tokenGenerator.generate(loadedAccount.id)
 
-    await this.updateAcessTokenRepositoryStub.updateAcessToken(loadedAccount.id, generatedToken)
+    await this.updateAcessTokenRepository.updateAcessToken(loadedAccount.id, generatedToken)
 
     return generatedToken
   }

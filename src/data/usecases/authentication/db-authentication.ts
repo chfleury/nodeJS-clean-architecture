@@ -2,19 +2,22 @@ import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by
 import { Authentication } from '../../../domain/usecases/authentication'
 import { HashComparer } from '../../protocols/cryptography/hash-comparer'
 import { TokenGenerator } from '../../protocols/cryptography/token-generator'
+import { UpdateAcessTokenRepository } from '../../protocols/db/update-acess-token-repository'
 
 export class DbAuthentication implements Authentication {
   private readonly loadAccountByEmailRepository
   private readonly hashComparer
   private readonly tokenGenerator
-
+  private readonly updateAcessTokenRepositoryStub
   constructor (
     loadAccountByEmailRepository: LoadAccountByEmailRepository,
     hashComparer: HashComparer,
-    tokenGenerator: TokenGenerator) {
+    tokenGenerator: TokenGenerator,
+    updateAcessTokenRepositoryStub: UpdateAcessTokenRepository) {
     this.loadAccountByEmailRepository = loadAccountByEmailRepository
     this.hashComparer = hashComparer
     this.tokenGenerator = tokenGenerator
+    this.updateAcessTokenRepositoryStub = updateAcessTokenRepositoryStub
   }
 
   async auth (email: string, password: string): Promise<string | null> {
@@ -26,6 +29,10 @@ export class DbAuthentication implements Authentication {
 
     if (!await this.hashComparer.compare(password, loadedAccount.password)) { return null }
 
-    return await this.tokenGenerator.generate(loadedAccount.id)
+    const generatedToken = await this.tokenGenerator.generate(loadedAccount.id)
+
+    await this.updateAcessTokenRepositoryStub.update(loadedAccount.id, generatedToken)
+
+    return generatedToken
   }
 }

@@ -150,7 +150,7 @@ describe('DbAuthentication UseCase', () => {
     const updateSpy = jest.spyOn(updateAcessTokenRepositoryStub, 'updateAcessToken')
     await sut.auth('any_email@mail.com', 'any_password')
 
-    expect(updateSpy).toHaveBeenCalledWith('any_id', 'token')
+    expect(updateSpy).toHaveBeenCalledWith('any_email@mail.com', 'token')
   })
 
   test('Should throw if UpdateAcessTokenReposity throws', async () => {

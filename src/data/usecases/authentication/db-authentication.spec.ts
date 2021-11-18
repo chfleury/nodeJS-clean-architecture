@@ -17,7 +17,7 @@ const makeHashComparerStub = (): HashComparer => {
 
 const makeUpdateAcessTokenRepositoryStub = (): UpdateAcessTokenRepository => {
   class UpdateAcessTokenRepositoryStub implements UpdateAcessTokenRepository {
-    async update (id: string, token: string): Promise<void> {
+    async updateAcessToken (id: string, token: string): Promise<void> {
       return await new Promise(resolve => resolve())
     }
   }
@@ -147,7 +147,7 @@ describe('DbAuthentication UseCase', () => {
 
   test('Should call UpdateAcessTokenReposity with correct values', async () => {
     const { sut, updateAcessTokenRepositoryStub } = makeSut()
-    const updateSpy = jest.spyOn(updateAcessTokenRepositoryStub, 'update')
+    const updateSpy = jest.spyOn(updateAcessTokenRepositoryStub, 'updateAcessToken')
     await sut.auth('any_email@mail.com', 'any_password')
 
     expect(updateSpy).toHaveBeenCalledWith('any_id', 'token')
@@ -155,7 +155,7 @@ describe('DbAuthentication UseCase', () => {
 
   test('Should throw if UpdateAcessTokenReposity throws', async () => {
     const { sut, updateAcessTokenRepositoryStub } = makeSut()
-    jest.spyOn(updateAcessTokenRepositoryStub, 'update').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(updateAcessTokenRepositoryStub, 'updateAcessToken').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.auth('any_email@mail.com', 'any_password')
 
     await expect(promise).rejects.toThrow()
